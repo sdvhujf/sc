@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Christmas Vibes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            background: #003366; /* Dark blue background */
+            color: #fff;
+            overflow-x: hidden;
+            position: relative; /* Allow snowflakes to be positioned relative to the body */
+        }
+
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: #fbb000;
+            text-shadow: 3px 3px 12px #00ccff;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .wish-generator {
+            margin-top: 20px;
+        }
+        
+
+        .wish-generator input {
+            padding: 10px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 25px;
+            margin-right: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .wish-generator button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background: #00ccff;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .wish-generator button:hover {
+            background: #0088cc;
+        }
+
+        .post-generator {
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .post-preview {
+            margin-top: 20px;
+            padding: 30px;
+            background: url('image.jpg') no-repeat center center/cover; /* Santa image as background */
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+            position: relative;
+            width: 100%;
+            max-width: 430px; /* Facebook post size */
+            height: 560px; /* Facebook post size */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: rgba(173, 216, 230, 0.5); /* Semi-transparent light blue overlay */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .post-preview h2 {
+            font-size: 2.5rem;
+            color: #fbb000;
+            text-shadow: 2px 2px 8px rgba(255, 0, 0, 0.6);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .post-preview p {
+            font-size: 1.85rem;
+            color:rgb(255, 251, 251);
+            font: bold;
+            font-family: serif;
+            line-height: 1.5;
+            text-align: center;
+            background-color: #dfbd4b;
+            background: url(image.jpg);
+        }
+
+        .post-preview img {
+            max-width: 50%;
+            margin-top: 20px;
+            border: 6px solid #dfbd4b; /* Golden border */
+            border-radius: 50%; /* Round the image */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+            padding: 4px; /* Optional: Adds some space between the image and the border for a refined look */
+            transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+        }
+
+        .post-preview img:hover {
+            transform: scale(1.05); /* Slightly enlarge the image on hover */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4); /* Darker shadow for emphasis */
+        }
+
+        .download-btn {
+            margin-top: 20px;
+            padding: 12px 25px;
+            font-size: 1.2rem;
+            background: #00ccff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            opacity: 0.5; /* Make the button appear disabled initially */
+            pointer-events: none; /* Prevent clicking */
+        }
+
+        .download-btn.enabled {
+            opacity: 1; /* Button becomes fully visible when enabled */
+            pointer-events: auto; /* Allow clicking */
+        }
+
+        .download-btn:hover {
+            background: #0088cc;
+        }
+
+        /* Snowflake animation */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            font-size: 24px;
+            color: white;
+            user-select: none;
+            animation: fall linear infinite;
+        }
+
+        @keyframes fall {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .post-preview {
+                width: 90%;
+                height: auto;
+                max-width: 500px;
+                flex-direction: column;
+                padding: 20px;
+            }
+
+            .post-preview h2 {
+                font-size: 2rem;
+            }
+
+            .post-preview p {
+                font-size: 1.2rem;
+                color: gold;
+            }
+
+            .post-preview img {
+                max-width: 80%;
+            }
+
+            .download-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .wish-generator input,
+            .wish-generator button {
+                font-size: 1rem;
+                padding: 8px;
+                margin: 5px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .post-preview {
+                width: 100%;
+                height: auto;
+                max-width: 400px;
+                flex-direction: column;
+                padding: 15px;
+            }
+
+            .post-preview h2 {
+                font-size: 1.8rem;
+            }
+
+            .post-preview p {
+                font-size: 1rem;
+            }
+
+            .post-preview img {
+                max-width: 90%;
+            }
+
+            .download-btn {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .wish-generator input,
+            .wish-generator button {
+                font-size: 1rem;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Merry Christmas!</h1>
+        <p>Feel the icy vibes and celebrate the joy of the season.</p>
+    </div>
+
+    <div class="content">
+        <div class="wish-generator">
+            <input type="text" id="nameInput" placeholder="Enter your name" oninput="checkFields()" />
+            <button onclick="generateWish()" id="generateWishBtn" disabled>Get Your Wish</button>
+        </div>
+
+        <div class="post-generator">
+            <h2>Add Your Celebratory Image</h2>
+            <input type="file" id="imageInput" accept="image/*" onchange="previewImage(); checkFields()" />
+            <div class="post-preview" id="postPreview">
+                <h2 id="posterText">Merry Christmas!</h2>
+                <p id="wishText">Wishing you all the joy, love, and magic of the season!</p>
+                <img id="postImage" src="" alt="Uploaded Image" style="display:none;" />
+            </div>
+            <button class="download-btn" id="downloadBtn" onclick="downloadPoster()">Download Poster as JPG</button>
+        </div>
+    </div>
+
+    <script>
+        let isWishGenerated = false; // Track if the wish has been generated
+
+        // Check if the required fields are filled
+        function checkFields() {
+            const nameInput = document.getElementById('nameInput').value;
+            const imageInput = document.getElementById('imageInput').files.length > 0;
+            const generateWishBtn = document.getElementById('generateWishBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            // Enable the "Get Your Wish" button if the name input is filled
+            if (nameInput.trim() !== '') {
+                generateWishBtn.disabled = false;
+            } else {
+                generateWishBtn.disabled = true;
+            }
+
+            // Enable or disable the download button based on whether the wish has been generated and image is uploaded
+            if (isWishGenerated && imageInput) {
+                downloadBtn.classList.add('enabled');
+            } else {
+                downloadBtn.classList.remove('enabled');
+            }
+        }
+
+        // Generate a personalized wish
+        function generateWish() {
+            const name = document.getElementById('nameInput').value;
+            const wishText = document.getElementById('wishText');
+
+            if (name.trim() === '') {
+                wishText.textContent = 'Please enter your name to receive a wish!';
+            } else {
+                wishText.textContent = `Merry Christmas, ${name}! May your days be filled with love, joy, and holiday cheer!`;
+                isWishGenerated = true; // Set the flag to true after generating the wish
+                checkFields(); // Re-check the fields to enable the download button
+            }
+        }
+
+        // Preview uploaded image
+        function previewImage() {
+            const fileInput = document.getElementById('imageInput');
+            const postPreview = document.getElementById('postPreview');
+            const postImage = document.getElementById('postImage');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    postImage.src = e.target.result;
+                    postImage.style.display = "block"; // Show image
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        // Download the poster as a JPG
+        function downloadPoster() {
+            const postPreview = document.getElementById('postPreview');
+
+            html2canvas(postPreview).then((canvas) => {
+                const link = document.createElement('a');
+                link.download = 'Christmas_Poster.jpg';
+                link.href = canvas.toDataURL('image/jpeg');
+                link.click();
+            });
+        }
+
+        // Snowflake effect for Christmas vibe
+        function createSnowflakes() {
+            const snowflakeCount = 50; // Adjust the number of snowflakes
+            const body = document.body;
+
+            for (let i = 0; i < snowflakeCount; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.textContent = '❄';
+                snowflake.classList.add('snowflake');
+                snowflake.style.left = `${Math.random() * 100}vw`; // Random horizontal position
+                snowflake.style.animationDuration = `${Math.random() * 10 + 5}s`; // Random animation duration
+                body.appendChild(snowflake);
+            }
+        }
+
+        // Call the snowflake creation function when the page loads
+        window.onload = createSnowflakes;
+    </script>
+</body>
+</html>
